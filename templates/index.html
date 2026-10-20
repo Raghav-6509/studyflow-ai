@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyFlow AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-blur blur-one"></div>
+    <div class="background-blur blur-two"></div>
+
+    <div class="container">
+        <header class="header">
+            <div class="brand-wrap">
+                <div class="brand-mark">📚</div>
+                <div>
+                    <p class="eyebrow">Student study companion</p>
+                    <h1>StudyFlow AI</h1>
+                </div>
+            </div>
+            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                <div class="status-pill" id="cacheIndicator" style="background: rgba(16, 185, 129, 0.15); color: #059669; border: 1px solid rgba(16, 185, 129, 0.3);">
+                    <span>⚡</span>
+                    <span>Quota Saver Active</span>
+                </div>
+                <div class="status-pill">
+                    <span class="pulse-dot"></span>
+                    AI Learning Mode
+                </div>
+            </div>
+        </header>
+
+        <main class="app-shell">
+            <section class="input-panel panel">
+                <div class="panel-header">
+                    <div>
+                        <p class="section-kicker">Create your study pack</p>
+                        <h2>What do you want to learn today?</h2>
+                    </div>
+                </div>
+
+                <div class="field-row">
+                    <label class="field-label" for="topic">Topic</label>
+                    <div class="input-wrap">
+                        <input id="topic" type="text" class="topic-input" placeholder="e.g. Photosynthesis, World War II, Calculus, Machine Learning" autocomplete="off">
+                        <button id="clearInput" class="clear-btn" style="display: none;" aria-label="Clear topic">✕</button>
+                    </div>
+                </div>
+
+                <div class="field-grid">
+                    <div class="field-box">
+                        <label class="field-label" for="studyLevel">Level</label>
+                        <select id="studyLevel" class="select-input">
+                            <option value="High School">High School</option>
+                            <option value="Undergraduate" selected>Undergraduate</option>
+                            <option value="Advanced">Advanced</option>
+                        </select>
+                    </div>
+
+                    <div class="field-box">
+                        <label class="field-label" for="studyGoal">Study goal</label>
+                        <select id="studyGoal" class="select-input">
+                            <option value="Revision" selected>Quick revision</option>
+                            <option value="Exam Preparation">Exam preparation</option>
+                            <option value="Understanding">Deep understanding</option>
+                            <option value="Homework Help">Homework help</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="suggestion-row" aria-label="Suggested topics">
+                    <span class="chip-label">Popular topics</span>
+                    <button type="button" class="topic-chip" data-topic="Photosynthesis">Photosynthesis</button>
+                    <button type="button" class="topic-chip" data-topic="World War II">World War II</button>
+                    <button type="button" class="topic-chip" data-topic="Calculus">Calculus</button>
+                    <button type="button" class="topic-chip" data-topic="Machine Learning">Machine Learning</button>
+                </div>
+
+                <div class="action-stack">
+                    <button id="generateAll" class="primary-btn btn">
+                        <span>✨</span>
+                        <span class="btn-text">Generate study pack</span>
+                        <span class="btn-loader" style="display: none;">Generating...</span>
+                    </button>
+
+                    <button id="generateNotes" class="secondary-btn btn" style="width: 100%;">
+                        <span>📝</span>
+                        <span class="btn-text">Quick notes only</span>
+                        <span class="btn-loader" style="display: none;">...</span>
+                    </button>
+                </div>
+
+                <div class="mini-stats">
+                    <div class="stat-box">
+                        <strong id="topicCount">0</strong>
+                        <span>Recent topics</span>
+                    </div>
+                    <div class="stat-box">
+                        <strong>5x</strong>
+                        <span>Faster revision</span>
+                    </div>
+                    <div class="stat-box">
+                        <strong>AI</strong>
+                        <span>Study support</span>
+                    </div>
+                </div>
+            </section>
+
+            <aside class="sidebar panel">
+                <div class="panel-header compact">
+                    <div>
+                        <p class="section-kicker">Recent</p>
+                        <h3>Study history</h3>
+                    </div>
+                </div>
+                <div id="recentTopics" class="recent-topics">
+                    <p class="empty-history">No recent topics yet. Start learning!</p>
+                </div>
+            </aside>
+        </main>
+
+        <div id="error-message" class="error-message" style="display: none;">
+            <span>⚠️</span>
+            <span class="error-text"></span>
+        </div>
+
+        <section id="contentGrid" class="content-grid" style="display: none;">
+            <article id="summarySection" class="panel card" style="display: none;">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span>📌</span>
+                        <h3>Quick summary</h3>
+                    </div>
+                    <button class="action-btn" onclick="copyToClipboard('summaryContent')" title="Copy summary">📋</button>
+                </div>
+                <div id="summaryContent" class="content-body"></div>
+            </article>
+
+            <article id="notesSection" class="panel card" style="display: none;">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span>📝</span>
+                        <h3>Study notes</h3>
+                    </div>
+                    <div class="card-actions">
+                        <button class="action-btn" id="downloadNotes" title="Download notes">💾</button>
+                        <button class="action-btn" onclick="copyToClipboard('notesContent')" title="Copy notes">📋</button>
+                    </div>
+                </div>
+                <div id="notesContent" class="content-body notes-body"></div>
+            </article>
+
+            <article id="checklistSection" class="panel card" style="display: none;">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span>✅</span>
+                        <h3>Revision checklist</h3>
+                    </div>
+                </div>
+                <ul id="checklistContent" class="checklist content-body"></ul>
+            </article>
+        </section>
+
+        <div id="emptyState" class="empty-state panel">
+            <div class="empty-icon">🎓</div>
+            <h3>Ready when you are</h3>
+            <p>Generate smarter notes, exam questions, flashcards, and revision reminders in one click.</p>
+            <div class="feature-list">
+                <div class="feature-item"><span>✨</span> AI study generation</div>
+                <div class="feature-item"><span>📚</span> Clear notes</div>
+                <div class="feature-item"><span>🎯</span> Practice questions</div>
+                <div class="feature-item"><span>🧠</span> Quick flashcards</div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>Built for students, learners, and focused study routines.</p>
+        </footer>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
