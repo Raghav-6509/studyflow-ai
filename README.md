@@ -1,21 +1,21 @@
-# StudyFlow AI 📚⚡
+# StudyFlow AI 📚
 
 A lightweight, student-focused study companion that generates structured revision notes, summaries, and revision checklists using Google Gemini with built-in token optimization and quota-saving caching.
 
 ---
 
-## 🌟 Key Highlights
+## Key Highlights
 
-- **⚡ Built-in Quota Saver**: Employs in-memory TTL caching so repeat topics consume **0 tokens and 0 API requests**.
-- **🎯 High-Yield Notes**: Compact, structured revision bullet points tailored by academic level (High School, Undergraduate, Advanced) and goal.
-- **📌 Executive Summaries & Checklists**: Generates quick digestible summaries and step-by-step master checklists for quick recall.
-- **💾 Export & Copy**: Easily download notes as text files or copy them with one click.
-- **🧪 Offline Dev / Mock Mode (`MOCK_AI=true`)**: Test UI changes, styling, and workflows without burning any Gemini API credits.
-- **🎨 Responsive UI**: Modern glassmorphic dashboard built with vanilla CSS and responsive design.
+- **Built-in Quota Saver**: Employs in-memory TTL caching so repeat topics consume **0 tokens and 0 API requests**.
+- **High-Yield Notes**: Compact, structured revision bullet points tailored by academic level (High School, Undergraduate, Advanced) and goal.
+- **Executive Summaries & Checklists**: Generates quick digestible summaries and step-by-step master checklists for quick recall.
+- **Export & Copy**: Easily download notes as text files or copy them with one click.
+- **Offline Dev / Mock Mode (`MOCK_AI=true`)**: Test UI changes, styling, and workflows without burning any Gemini API credits.
+- **Responsive UI**: Modern glassmorphic dashboard built with vanilla CSS and responsive design.
 
 ---
 
-## 📁 Repository Structure
+## Repository Structure
 
 ```text
 ai-study-helper/
@@ -37,7 +37,7 @@ ai-study-helper/
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### 1. Prerequisites
 - Python 3.10+
@@ -83,7 +83,7 @@ MOCK_AI=false
 
 ---
 
-## 🖥️ Running the Application
+## Running the Application
 
 ```bash
 python app.py
@@ -95,7 +95,7 @@ http://localhost:5000
 
 ---
 
-## 🧪 Running Automated Tests
+## Running Automated Tests
 
 Run the built-in test suite to verify routes and caching without using any API tokens:
 ```bash
@@ -104,7 +104,7 @@ python test_app.py -v
 
 ---
 
-## 📡 API Endpoints
+## API Endpoints
 
 | Method | Endpoint | Description |
 |---|---|---|
@@ -116,6 +116,19 @@ python test_app.py -v
 
 ---
 
-## 📄 License
+## Contributors
+
+- **Raghav** ([@Raghav-6509](https://github.com/Raghav-6509)) – Main developer & architecture
+- **CKhurana13** ([@CKhurana13](https://github.com/CKhurana13)) – Frontend UI development & design implementation
+
+---
+
+## Contributing
+
+Contributions, bug reports, and feature suggestions are always welcome! Please check out our [Contributing Guidelines](CONTRIBUTING.md) to get started.
+
+---
+
+## License
 
 This project is licensed under the [MIT License](LICENSE).
